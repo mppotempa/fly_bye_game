@@ -5,13 +5,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
+    public GameObject shot;
+    public Transform shotSpawn;
     public float speed;
     public float tilt;
+
+    //limits shots per sec DELETE LATER
+    public float fireRate;
+    private float nextFire;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
+
     private void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -27,5 +34,15 @@ public class PlayerController : MonoBehaviour
         //transform.position = Camera.main.ViewportToWorldPoint(pos);
 
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
+    }
+
+    private void Update()
+    {
+        if (Input.GetButton("Shoot") && Time.time > nextFire)
+        {
+            //CHANGE LATER TO ADJUST FOR FUEL
+            nextFire = Time.time + fireRate;
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
     }
 }
