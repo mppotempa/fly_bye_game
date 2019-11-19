@@ -12,8 +12,6 @@ public class RandomRotator : MonoBehaviour
     void Start()
     {
 
-        //bug >> y position increases steadily with rotation
-        //will not rotate if gravity and kinematic is selected
         rb = GetComponent<Rigidbody>();
         rb.angularVelocity = Random.insideUnitSphere * tumble;
     }
