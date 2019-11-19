@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = movement * speed;
 
         //limits the player's movement to the screen, regardless of screen size
+        //bug >> player moves - along y axis with this in play
         //var pos = Camera.main.WorldToViewportPoint(transform.position);
         //pos.x = Mathf.Clamp(pos.x, 0.09f, 0.91f);
         //pos.y = Mathf.Clamp(pos.y, 0.09f, 0.91f);

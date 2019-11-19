@@ -11,9 +11,10 @@ public class RandomRotator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        //rb.angularVelocity = Random.insideUnitSphere * tumble;
-    }
 
-    // Update is called once per frame
+        //bug >> y position increases steadily with rotation
+        //will not rotate if gravity and kinematic is selected
+        rb = GetComponent<Rigidbody>();
+        rb.angularVelocity = Random.insideUnitSphere * tumble;
+    }
 }
