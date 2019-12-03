@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public Transform shotSpawn;
     public float speed;
     public float tilt;
+    public float lightSpeed;
+    public int sheild;
+
 
     //limits shots per sec DELETE LATER
     public float fireRate;
@@ -17,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        sheild = 10;
     }
 
     private void FixedUpdate()

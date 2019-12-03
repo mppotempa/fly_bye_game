@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+
+    //public static GameController gc;
+
     public GameObject hazard;
     public Vector3 spawnValues;
     public int hazardCount;
@@ -11,6 +14,7 @@ public class GameController : MonoBehaviour
     public float startWait;
     public float waveWait;
 
+    public float sheild;
 
     // Start is called before the first frame update
     void Start()
