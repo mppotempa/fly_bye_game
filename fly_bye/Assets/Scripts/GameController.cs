@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     public float startWait;
     public float waveWait;
 
+    float timePassed;
+
     public float sheild;
 
     // Start is called before the first frame update
@@ -22,13 +24,22 @@ public class GameController : MonoBehaviour
         StartCoroutine(SpawnWaves());
     }
 
+    public void Update()
+    {
+        //game timer
+        timePassed += Time.deltaTime + 120f;
+
+        int sec = Mathf.FloorToInt(timePassed % 60f);
+        print("Time elapsed in seconds: " + sec);
+    }
+
     // Update is called once per frame
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
         while (true)
         {
-            for(int i=0; i< hazardCount; i++)
+            for (int i = 0; i < hazardCount; i++)
             {
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
@@ -37,7 +48,7 @@ public class GameController : MonoBehaviour
             }
             yield return new WaitForSeconds(waveWait);
         }
-        
+
 
     }
 }
