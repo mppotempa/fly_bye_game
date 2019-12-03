@@ -7,20 +7,25 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public GameObject shot;
     public Transform shotSpawn;
-    public float speed;
     public float tilt;
-    public float lightSpeed;
+
+    public float power;
+    public int shots;
     public int sheild;
 
+    float maxSpeed;
 
-    //limits shots per sec DELETE LATER
+    //limits shots per sec
     public float fireRate;
     private float nextFire;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        maxSpeed = 30f;
         sheild = 10;
+        power = 1.0f;
+        shots = 10;
     }
 
     private void FixedUpdate()
@@ -29,13 +34,12 @@ public class PlayerController : MonoBehaviour
         float moveVerticle = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVerticle);
-        rb.velocity = movement * speed;
+        rb.velocity = movement * (maxSpeed * power);
 
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
 
 
         //limits the player's movement to the screen, regardless of screen size
-        //bug >> player moves - along y axis with this in play SOLVED
         var pos = Camera.main.WorldToViewportPoint(transform.position);
         //pos.x = Mathf.Clamp(pos.x, 0.09f, 0.91f);
         //pos.y = Mathf.Clamp(pos.y, 0.09f, 0.91f);
@@ -52,9 +56,18 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButton("Shoot") && Time.time > nextFire)
         {
-            //CHANGE LATER TO ADJUST FOR FUEL
-            nextFire = Time.time + fireRate;
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            if(shots > 0)
+            {
+                nextFire = Time.time + fireRate;
+                Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+                shots--;
+                power -= 0.1f;
+                print("Shots: " + shots + " Power: " + power);
+            }
+            else
+            {
+                return;
+            }
         }
 
 

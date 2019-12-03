@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
-    //public static GameController gc;
+    PlayerController pc;
 
     public GameObject hazard;
     public Vector3 spawnValues;
@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public float spawnWait;
     public float startWait;
     public float waveWait;
+    public int distance = 0;
 
     float timePassed;
 
@@ -21,16 +22,24 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnWaves());
+        //StartCoroutine(SpawnWaves());
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        pc = player.GetComponent<PlayerController>();
     }
 
     public void Update()
     {
+        /*
         //game timer
         timePassed += Time.deltaTime + 120f;
 
-        int sec = Mathf.FloorToInt(timePassed % 60f);
-        print("Time elapsed in seconds: " + sec);
+        float sec = timePassed % 60f;
+        */
+        //the distance is updated based on power
+        distance += Mathf.RoundToInt(pc.power);
+        //print(distance);
+        
+        //print("Time elapsed in seconds: " + sec);
     }
 
     // Update is called once per frame
@@ -51,4 +60,5 @@ public class GameController : MonoBehaviour
 
 
     }
+
 }
