@@ -101,7 +101,7 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         print("Game Over");
-        isPlaying = false;
+        //isPlaying = false;
         StopCoroutine(SpawnWaves());
     }
 
