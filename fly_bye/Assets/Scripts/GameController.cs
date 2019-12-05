@@ -45,11 +45,11 @@ public class GameController : MonoBehaviour
         float sec = timePassed % 60f;
         */
         //the distance is updated based on power
-        distance += Mathf.RoundToInt(pc.power);
-        UpdateDistance(distance);
-        //print(distance);
-        
-        //print("Time elapsed in seconds: " + sec);
+        if (isPlaying)
+        {
+            distance += Mathf.RoundToInt(pc.power);
+            UpdateDistance(distance);
+        }
     }
 
     // Update is called once per frame
@@ -103,4 +103,5 @@ public class GameController : MonoBehaviour
         print("Game Over");
         isPlaying = false;
     }
+
 }
