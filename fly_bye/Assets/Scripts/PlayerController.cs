@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    GameController control;
+
     private Rigidbody rb;
     public GameObject shot;
     public Transform shotSpawn;
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour
         sheild = 10;
         power = 1.0f;
         shots = 10;
+        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
+        control = controller.GetComponent<GameController>();
     }
 
     private void FixedUpdate()
@@ -62,7 +66,7 @@ public class PlayerController : MonoBehaviour
                 Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
                 shots--;
                 power -= 0.1f;
-                print("Shots: " + shots + " Power: " + power);
+                //print("Shots: " + shots + " Power: " + power);
             }
             else
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameController : MonoBehaviour
     public float waveWait;
     public float sheild;
     public int distance = 0;
+    //public Text distanceText;
+    //public Text powerText;
+    public Text sheildText;
 
     float timePassed;
     bool gameOver;
@@ -28,7 +32,7 @@ public class GameController : MonoBehaviour
         pc = player.GetComponent<PlayerController>();
         gameOver = false;
         gameOver = false;
-
+        sheildText.text = "Shield Levels: 100%";
 
     }
 
@@ -65,6 +69,13 @@ public class GameController : MonoBehaviour
         }
 
 
+    }
+
+    public void UpdateShield(int level)
+    {
+        print("Sheild Text Updated");
+        int newLevel = level * 10;
+        sheildText.text = "Shield Levels: " + newLevel + "%";
     }
 
 }
