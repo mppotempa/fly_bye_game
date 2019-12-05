@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
                 Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
                 shots--;
                 power -= 0.1f;
+                control.UpdateLevelText(power);
                 //print("Shots: " + shots + " Power: " + power);
             }
             else

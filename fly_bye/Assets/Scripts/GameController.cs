@@ -16,8 +16,8 @@ public class GameController : MonoBehaviour
     public float waveWait;
     public float sheild;
     public int distance = 0;
-    //public Text distanceText;
-    //public Text powerText;
+    public Text distanceText;
+    public Text powerText;
     public Text sheildText;
 
     float timePassed;
@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
         gameOver = false;
         gameOver = false;
         sheildText.text = "Shield Levels: 100%";
+        powerText.text = "Power Levels: 100%";
 
     }
 
@@ -46,6 +47,7 @@ public class GameController : MonoBehaviour
         */
         //the distance is updated based on power
         distance += Mathf.RoundToInt(pc.power);
+        UpdateDistance(distance);
         //print(distance);
         
         //print("Time elapsed in seconds: " + sec);
@@ -73,9 +75,27 @@ public class GameController : MonoBehaviour
 
     public void UpdateShield(int level)
     {
-        print("Sheild Text Updated");
+        //print("Sheild Text Updated");
         int newLevel = level * 10;
         sheildText.text = "Shield Levels: " + newLevel + "%";
     }
 
+    public void UpdateLevelText(float level)
+    {
+        int intLevel;
+        if (level > 0)
+        {
+            intLevel = Mathf.FloorToInt(level * 100.0f);
+        }
+        else
+        {
+            intLevel = 0;
+        }
+        powerText.text = "Power Level: " + intLevel + "%";
+    }
+
+    public void UpdateDistance(int distance)
+    {
+        distanceText.text = distance.ToString() + " KM";
+    }
 }
