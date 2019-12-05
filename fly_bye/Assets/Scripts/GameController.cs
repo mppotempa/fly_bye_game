@@ -19,9 +19,9 @@ public class GameController : MonoBehaviour
     public Text distanceText;
     public Text powerText;
     public Text sheildText;
+    public bool isPlaying;
 
     float timePassed;
-    bool gameOver;
     bool restart;
 
     // Start is called before the first frame update
@@ -30,10 +30,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(SpawnWaves());
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
-        gameOver = false;
-        gameOver = false;
         sheildText.text = "Shield Levels: 100%";
         powerText.text = "Power Levels: 100%";
+        isPlaying = true;
 
     }
 
@@ -97,5 +96,11 @@ public class GameController : MonoBehaviour
     public void UpdateDistance(int distance)
     {
         distanceText.text = distance.ToString() + " KM";
+    }
+
+    public void EndGame()
+    {
+        print("Game Over");
+        isPlaying = false;
     }
 }

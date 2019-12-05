@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class DestroyByContact : MonoBehaviour
 {
@@ -12,10 +13,17 @@ public class DestroyByContact : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        pc = player.GetComponent<PlayerController>();
+
         GameObject controller = GameObject.FindGameObjectWithTag("GameController");
         control = controller.GetComponent<GameController>();
+        try {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            pc = player.GetComponent<PlayerController>();
+        }
+        catch (Exception e)
+        {
+            return;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,20 +43,20 @@ public class DestroyByContact : MonoBehaviour
             if (this.CompareTag("EnemyShot") && pc.sheild > 0)
             {
                 //decrease sheild if player is hit by enemy shot
-                print("Enemy Fire");
+                //print("Enemy Fire");
                 //print("Current Shield Level: " + pc.sheild);
                 pc.sheild = pc.sheild - 1;
-                print("Sheild Levels: " + pc.sheild);
+                //print("Sheild Levels: " + pc.sheild);
                 Destroy(gameObject);
                 control.UpdateShield(pc.sheild);
                 return;
             }
             else
             {
-                pc.sheild = 0;
-                control.UpdateShield(pc.sheild);
-                print("Collision");
+                control.UpdateShield(0);
+                //print("Collision");
                 Instantiate(playerExplosion, transform.position, transform.rotation);
+                control.EndGame();
             }
         }
         Destroy(other.gameObject);
