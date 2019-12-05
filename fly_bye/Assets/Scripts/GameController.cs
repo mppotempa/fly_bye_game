@@ -38,12 +38,7 @@ public class GameController : MonoBehaviour
 
     public void Update()
     {
-        /*
-        //game timer
-        timePassed += Time.deltaTime + 120f;
 
-        float sec = timePassed % 60f;
-        */
         //the distance is updated based on power
         if (isPlaying)
         {
@@ -101,7 +96,7 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         print("Game Over");
-        //isPlaying = false;
+        isPlaying = false;
         StopCoroutine(SpawnWaves());
     }
 
