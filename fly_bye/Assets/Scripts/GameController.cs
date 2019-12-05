@@ -7,24 +7,29 @@ public class GameController : MonoBehaviour
 
     PlayerController pc;
 
-    public GameObject hazard;
+    public GameObject[] hazards;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
     public float startWait;
     public float waveWait;
+    public float sheild;
     public int distance = 0;
 
     float timePassed;
-
-    public float sheild;
+    bool gameOver;
+    bool restart;
 
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(SpawnWaves());
+        StartCoroutine(SpawnWaves());
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
+        gameOver = false;
+        gameOver = false;
+
+
     }
 
     public void Update()
@@ -50,10 +55,11 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < hazardCount; i++)
             {
-                Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+                GameObject hazard = hazards[Random.Range (0, hazards.Length)];
+                Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
-                Instantiate(hazard, spawnPosition, spawnRotation);
-                yield return new WaitForSeconds(spawnWait);
+                Instantiate (hazard, spawnPosition, spawnRotation);
+                yield return new WaitForSeconds (spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
         }
