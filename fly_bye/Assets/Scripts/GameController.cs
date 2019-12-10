@@ -21,10 +21,10 @@ public class GameController : MonoBehaviour
     public Text sheildText;
     public Slider powerBar;
     public Slider sheildBar;
-    public bool isPlaying;
 
     float timePassed;
     bool restart;
+    bool gameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
         pc = player.GetComponent<PlayerController>();
         sheildText.text = "Shield Levels: 100%";
         powerText.text = "Power Levels: 100%";
-        isPlaying = true;
+        gameOver = false;
         powerBar.value = 100;
         sheildBar.value = 10;
 
@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
     {
 
         //the distance is updated based on power
-        if (isPlaying)
+        if (!gameOver)
         {
             distance += Mathf.RoundToInt(pc.power);
             UpdateDistance(distance);
@@ -66,6 +66,11 @@ public class GameController : MonoBehaviour
                 yield return new WaitForSeconds (spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
+
+            if (gameOver)
+            {
+                break;
+            }
         }
 
 
@@ -102,7 +107,7 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         print("Game Over");
-        isPlaying = false;
+        gameOver = true;
         StopCoroutine(SpawnWaves());
     }
 
