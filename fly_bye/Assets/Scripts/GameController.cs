@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
 
     public GameObject[] hazards;
     public GameObject[] obstacles;
+    public GameObject playerObject;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -30,12 +31,14 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         StartCoroutine(SpawnWaves());
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
+        */
         sheildText.text = "Shield Levels: 100%";
         powerText.text = "Power Levels: 100%";
-        gameOver = false;
+        gameOver = true;
         powerBar.value = 100;
         sheildBar.value = 10;
 
@@ -84,6 +87,16 @@ public class GameController : MonoBehaviour
         }
 
 
+    }
+
+    public void PlayGame()
+    {
+        StartCoroutine(SpawnWaves());
+        //instantiate new player object
+        Instantiate(playerObject, new Vector3(0, 0, 0), Quaternion.identity);
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        pc = player.GetComponent<PlayerController>();
     }
 
     public void UpdateShield(int level)
