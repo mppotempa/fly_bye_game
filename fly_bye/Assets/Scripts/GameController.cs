@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public GameObject[] hazards;
     public GameObject[] obstacles;
     public GameObject playerObject;
+    public GameObject mainPanel;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -23,11 +24,11 @@ public class GameController : MonoBehaviour
     public Text sheildText;
     public Slider powerBar;
     public Slider sheildBar;
-    public GameObject mainMenuPanel;
 
     float timePassed;
     bool restart;
     bool gameOver;
+    bool isPlaying;
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +38,11 @@ public class GameController : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
         */
+        mainPanel.SetActive(true);
         sheildText.text = "Shield Levels: 100%";
         powerText.text = "Power Levels: 100%";
-        gameOver = true;
+        gameOver = false;
+        isPlaying = false;
         powerBar.value = 100;
         sheildBar.value = 10;
 
@@ -49,7 +52,7 @@ public class GameController : MonoBehaviour
     {
 
         //the distance is updated based on power
-        if (!gameOver)
+        if (isPlaying && !gameOver)
         {
             distance += Mathf.RoundToInt(pc.power);
             UpdateDistance(distance);
@@ -92,16 +95,22 @@ public class GameController : MonoBehaviour
 
     public void PlayGame()
     {
-        StartCoroutine(SpawnWaves());
-        //instantiate new player object
-        Instantiate(playerObject, new Vector3(0, 0, 0), Quaternion.identity);
 
-        print("Spawn New Player");
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        pc = player.GetComponent<PlayerController>();
+        if (!isPlaying)
+        {
+            mainPanel.SetActive(false);
+            StartCoroutine(SpawnWaves());
+            //instantiate new player object
+            Instantiate(playerObject, new Vector3(0, 0, 0), Quaternion.identity);
 
-        gameOver = false;
+            print("Spawn New Player");
+            //set up to update player info
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            pc = player.GetComponent<PlayerController>();
 
+            isPlaying = true;
+            gameOver = false;
+        }
     }
 
     public void UpdateShield(int level)
@@ -132,12 +141,20 @@ public class GameController : MonoBehaviour
         distanceText.text = distance.ToString() + " KM";
     }
 
+    //sets values to end the game
     public void EndGame()
     {
         print("Game Over");
         gameOver = true;
+        isPlaying = false;
         //StopCoroutine(SpawnWaves());
-        GameObject.Find("MenuPanel").SetActive(true);
+        mainPanel.SetActive(true);
+    }
+
+    //method to test if button has been pressed
+    public void testButton()
+    {
+        print("Button Pressed");
     }
 
 }
