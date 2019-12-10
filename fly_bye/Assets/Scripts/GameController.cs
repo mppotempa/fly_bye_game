@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public GameObject[] obstacles;
     public GameObject playerObject;
     public GameObject mainPanel;
+    public GameObject gameStatsPanel;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -22,13 +23,16 @@ public class GameController : MonoBehaviour
     public Text distanceText;
     public Text powerText;
     public Text sheildText;
+    public Text highscoreText;
     public Slider powerBar;
     public Slider sheildBar;
 
     float timePassed;
+    string key = "highScore";
     bool restart;
     bool gameOver;
     bool isPlaying;
+    Coroutine coSpawnWaves;
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +43,12 @@ public class GameController : MonoBehaviour
         pc = player.GetComponent<PlayerController>();
         */
         mainPanel.SetActive(true);
-        sheildText.text = "Shield Levels: 100%";
-        powerText.text = "Power Levels: 100%";
+        gameStatsPanel.SetActive(false);
         gameOver = false;
         isPlaying = false;
-        powerBar.value = 100;
-        sheildBar.value = 10;
+        ResetValues();
+
+        highscoreText.text = "High Score: " + PlayerPrefs.GetInt(key, 0) + "km";
 
     }
 
@@ -93,13 +97,16 @@ public class GameController : MonoBehaviour
 
     }
 
+    //create a new player object, start the game
     public void PlayGame()
     {
-
+        //prevent duplicate games from being run
         if (!isPlaying)
         {
+            ResetValues();
             mainPanel.SetActive(false);
-            StartCoroutine(SpawnWaves());
+            gameStatsPanel.SetActive(true);
+            coSpawnWaves = StartCoroutine(SpawnWaves());
             //instantiate new player object
             Instantiate(playerObject, new Vector3(0, 0, 0), Quaternion.identity);
 
@@ -121,6 +128,7 @@ public class GameController : MonoBehaviour
         sheildBar.value = level;
     }
 
+    //set the power level
     public void UpdateLevel(float level)
     {
         int intLevel;
@@ -147,14 +155,42 @@ public class GameController : MonoBehaviour
         print("Game Over");
         gameOver = true;
         isPlaying = false;
-        //StopCoroutine(SpawnWaves());
+        StopCoroutine(coSpawnWaves);
+        if (HighScore())
+        {
+            highscoreText.text = "New High Score: " + PlayerPrefs.GetInt(key, 0) + "km";
+        }
+        else
+        {
+            highscoreText.text = "High Score: " + PlayerPrefs.GetInt(key, 0) + "km";
+        }
         mainPanel.SetActive(true);
+        gameStatsPanel.SetActive(false);
     }
 
-    //method to test if button has been pressed
-    public void testButton()
+    //check to see if there is a new highscore and assign it
+    public bool HighScore()
     {
-        print("Button Pressed");
+        int current = PlayerPrefs.GetInt(key, 0);
+        if (distance > current)
+        {
+            PlayerPrefs.SetInt(key, distance);
+            PlayerPrefs.Save();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
+    //reset variables to base values
+    public void ResetValues()
+    {
+        powerBar.value = 100;
+        sheildBar.value = 10;
+        sheildText.text = "Shield Levels: 100%";
+        powerText.text = "Power Levels: 100%";
+        distance = 0;
+    }
 }
