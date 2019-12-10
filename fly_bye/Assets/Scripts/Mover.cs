@@ -1,18 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-public class Mover : MonoBehaviour
+public class Mover : MonoBehaviour 
 {
-    private Rigidbody rb;
-
     public float speed;
 
-    // Start is called before the first frame update
+    private Rigidbody rb;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody> ();
         rb.velocity = transform.forward * speed;
-
     }
 }
