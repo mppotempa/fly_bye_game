@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour
     public Text distanceText;
     public Text powerText;
     public Text sheildText;
+    public Slider powerBar;
+    public Slider sheildBar;
     public bool isPlaying;
 
     float timePassed;
@@ -33,6 +35,8 @@ public class GameController : MonoBehaviour
         sheildText.text = "Shield Levels: 100%";
         powerText.text = "Power Levels: 100%";
         isPlaying = true;
+        powerBar.value = 100;
+        sheildBar.value = 10;
 
     }
 
@@ -72,9 +76,10 @@ public class GameController : MonoBehaviour
         //print("Sheild Text Updated");
         int newLevel = level * 10;
         sheildText.text = "Shield Levels: " + newLevel + "%";
+        sheildBar.value = level;
     }
 
-    public void UpdateLevelText(float level)
+    public void UpdateLevel(float level)
     {
         int intLevel;
         if (level > 0)
@@ -86,6 +91,7 @@ public class GameController : MonoBehaviour
             intLevel = 0;
         }
         powerText.text = "Power Level: " + intLevel + "%";
+        powerBar.value = intLevel;
     }
 
     public void UpdateDistance(int distance)
