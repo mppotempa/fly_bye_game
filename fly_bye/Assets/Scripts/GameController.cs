@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public Text sheildText;
     public Slider powerBar;
     public Slider sheildBar;
+    public GameObject mainMenuPanel;
 
     float timePassed;
     bool restart;
@@ -95,8 +96,12 @@ public class GameController : MonoBehaviour
         //instantiate new player object
         Instantiate(playerObject, new Vector3(0, 0, 0), Quaternion.identity);
 
+        print("Spawn New Player");
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
+
+        gameOver = false;
+
     }
 
     public void UpdateShield(int level)
@@ -131,7 +136,8 @@ public class GameController : MonoBehaviour
     {
         print("Game Over");
         gameOver = true;
-        StopCoroutine(SpawnWaves());
+        //StopCoroutine(SpawnWaves());
+        GameObject.Find("MenuPanel").SetActive(true);
     }
 
 }
