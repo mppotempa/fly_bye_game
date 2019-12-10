@@ -58,19 +58,6 @@ public class PlayerController : MonoBehaviour
 
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
 
-        /*
-        //limits the player's movement to the screen, regardless of screen size
-        var pos = Camera.main.WorldToViewportPoint(transform.position);
-        //pos.x = Mathf.Clamp(pos.x, 0.09f, 0.91f);
-        //pos.y = Mathf.Clamp(pos.y, 0.09f, 0.91f);
-        pos.x = Mathf.Clamp01(pos.x);
-        pos.y = Mathf.Clamp01(pos.y);
-        //set z to the camera distance from z 0
-        pos.z = Camera.main.transform.position.z;
-        Vector3 world = Camera.main.ViewportToWorldPoint(pos);
-        world.y = transform.position.y;
-        transform.position = world;
-        */
     }
 
     private void Update()
