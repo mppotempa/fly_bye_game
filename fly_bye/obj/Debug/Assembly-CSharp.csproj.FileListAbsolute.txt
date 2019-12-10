@@ -1,0 +1,2 @@
+C:\Users\Mary\Documents\MSCHG300\g300_final\fly_bye\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Mary\Documents\MSCHG300\g300_final\fly_bye\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Boundary
+{
+    public float xMin, xMax, zMin, zMax;
+}
+
 public class PlayerController : MonoBehaviour
 {
     GameController control;
 
+    public Boundary boundary;
     private Rigidbody rb;
     public GameObject shot;
     public Transform shotSpawn;
@@ -40,9 +47,18 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVerticle);
         rb.velocity = movement * (maxSpeed * power);
 
+
+        rb.position = new Vector3
+        (
+            Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
+            0.0f,
+            Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax)
+        );
+
+
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
 
-
+        /*
         //limits the player's movement to the screen, regardless of screen size
         var pos = Camera.main.WorldToViewportPoint(transform.position);
         //pos.x = Mathf.Clamp(pos.x, 0.09f, 0.91f);
@@ -54,6 +70,7 @@ public class PlayerController : MonoBehaviour
         Vector3 world = Camera.main.ViewportToWorldPoint(pos);
         world.y = transform.position.y;
         transform.position = world;
+        */
     }
 
     private void Update()
