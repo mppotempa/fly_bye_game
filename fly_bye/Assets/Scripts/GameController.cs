@@ -140,7 +140,7 @@ public class GameController : MonoBehaviour
         {
             intLevel = 0;
         }
-        powerText.text = "Power Level: " + intLevel + "%";
+        powerText.text = "Energy Level: " + intLevel + "%";
         powerBar.value = intLevel;
     }
 
@@ -189,8 +189,8 @@ public class GameController : MonoBehaviour
     {
         powerBar.value = 100;
         sheildBar.value = 10;
-        sheildText.text = "Shield Levels: 100%";
-        powerText.text = "Power Levels: 100%";
+        sheildText.text = "Shield Level: 100%";
+        powerText.text = "Energy Level: 100%";
         distance = 0;
     }
 }
